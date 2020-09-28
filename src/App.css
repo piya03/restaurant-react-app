@@ -1,0 +1,12 @@
+.btn_container{
+    display: flex;
+    margin-top: 25px;
+}
+.container{
+    margin: 10px;
+    
+}
+.common_cards{
+    display: flex;
+    justify-content: space-between;
+}
