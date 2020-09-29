@@ -1,15 +1,17 @@
 .card_container{
-
-    width: 400px;
+    min-width: 400px;
+    max-width: 400px;
     border-radius: 10px;
     box-shadow: 0px 3px 10px #0A4B6D1F;
     border: 1px solid #DCE9F5;
-
+    margin: 0px 15px;
+    background-color: white;
 }
 .heading{
     background: #f5f4f9;
     padding: 10px;
     text-align: center;
+    border-radius: 10px 10px 0px 0px;
 }
 .threeDiv{
     display: grid;

@@ -1,12 +1,15 @@
 .btn_container{
     display: flex;
+    flex-wrap: wrap;
     margin-top: 25px;
 }
 .container{
-    margin: 10px;
-    
+    background-color: #eeeeee;
+    padding: 20px;
 }
 .common_cards{
     display: flex;
     justify-content: space-between;
+    overflow-x: auto;
+    padding-bottom: 30px;
 }
