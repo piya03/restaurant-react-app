@@ -9,28 +9,15 @@ function getFormattedDate(str) {
 const CommonTable = (props) => {
   const {
     tableData,
-    sortByName,
+
     isFetching,
-    setTableDataInState,
-    tableDatainState,
+
     changeTableData,
+
+    sortInfo,
+    setSortInfo,
   } = props;
-  console.log("CommonTable -> tableData", tableData);
   const { tableStyle, angleup, tag_action, tag_action2, noData } = styles;
-
-  // checked={checked}
-  // name={name}
-  // onChange={onChange}
-  // value={value}
-
-  // checked={data?.bankInt || false}
-  // name="bankInt"
-  // value={data.bankInt}
-  // onChange={e => {
-  //   // setchvalue(e.target.checked);
-  //   setFieldValue('bankInt', e.target.checked, true);
-  //   setFieldTouched('bankInt', true, false);
-  // }}
 
   function onHeaderCheckboxChange(e) {
     const isChecked = e.target.checked;
@@ -43,54 +30,118 @@ const CommonTable = (props) => {
     });
     changeTableData(newTableData);
   }
-  const [checkboxVal, setCheckBoxVal] = useState(false);
-  console.log("checkboxVal", checkboxVal);
+
+  function arrowStyles(key) {
+    return sortInfo.key == key && sortInfo.order === "DESC"
+      ? {
+          transform: "rotateZ(180deg)",
+          transformOrigin: "center",
+        }
+      : { transform: "rotateZ(0deg)" };
+  }
   return (
     <div>
       <table className={`${tableStyle}`}>
         <thead>
           <tr>
             <th>
-              <Checkbox
-                name={checkboxVal}
-                // value={setCheckBoxVal}
-                // checked={checkboxVal ? true : false}
-                onChange={onHeaderCheckboxChange}
-              />
+              <Checkbox onChange={onHeaderCheckboxChange} />
             </th>
-            <th>
+            <th
+              onClick={() => {
+                setSortInfo({
+                  key: "name",
+                  order: sortInfo.order === "ASC" ? "DESC" : "ASC",
+                });
+              }}
+            >
               <span>NAME </span>
               <i
-                onClick={() => {
-                  sortByName(tableData);
-                  setTableDataInState({
-                    ...tableDatainState,
-                    data: [...sortByName(tableData)],
-                  });
+                style={{
+                  ...arrowStyles("name"),
                 }}
-                style={{ cursor: "pointer" }}
                 className={`fa fa-angle-up ${angleup}`}
               ></i>
             </th>
-            <th>
+            <th
+              onClick={() => {
+                setSortInfo({
+                  key: "last_updated",
+                  order: sortInfo.order === "ASC" ? "DESC" : "ASC",
+                });
+              }}
+            >
               <span> LAST UPDATED</span>
-              <i className={`fa fa-angle-up ${angleup}`}></i>
+              <i
+                className={`fa fa-angle-up ${angleup}`}
+                style={{
+                  ...arrowStyles("last_updated"),
+                }}
+              ></i>
             </th>
-            <th>
+            <th
+              onClick={() => {
+                setSortInfo({
+                  key: "cogs",
+                  order: sortInfo.order === "ASC" ? "DESC" : "ASC",
+                });
+              }}
+            >
               <span>COGS %</span>
-              <i className={`fa fa-angle-up ${angleup}`}></i>
+              <i
+                className={`fa fa-angle-up ${angleup}`}
+                style={{
+                  ...arrowStyles("cogs"),
+                }}
+              ></i>
             </th>
-            <th>
-              <span> COST PRICE (`)</span>
-              <i className={`fa fa-angle-up ${angleup}`}></i>
+            <th
+              onClick={() => {
+                setSortInfo({
+                  key: "cost_price",
+                  order: sortInfo.order === "ASC" ? "DESC" : "ASC",
+                });
+              }}
+            >
+              <span> COST PRICE ($)</span>
+              <i
+                className={`fa fa-angle-up ${angleup}`}
+                style={{
+                  ...arrowStyles("cost_price"),
+                }}
+              ></i>
             </th>
-            <th>
+            <th
+              onClick={() => {
+                setSortInfo({
+                  key: "sale_price",
+                  order: sortInfo.order === "ASC" ? "DESC" : "ASC",
+                });
+              }}
+            >
               <span>SALE PRICE</span>
-              <i className={`fa fa-angle-up ${angleup}`}></i>
+              <i
+                className={`fa fa-angle-up ${angleup}`}
+                style={{
+                  ...arrowStyles("sale_price"),
+                }}
+              ></i>
             </th>
-            <th>
+            <th
+              onClick={() => {
+                setSortInfo({
+                  key: "gross_margin",
+                  order: sortInfo.order === "ASC" ? "DESC" : "ASC",
+                });
+              }}
+            >
               <span>GROSS MARGIN</span>
-              <i className={`fa fa-angle-up ${angleup}`}></i>
+              <i
+                className={`fa fa-angle-up ${angleup}`}
+                style={{
+                  ...arrowStyles("gross_margin"),
+                }}
+              ></i>
             </th>
             <th>TAG/ ACTIONS</th>
           </tr>
@@ -117,7 +168,7 @@ const CommonTable = (props) => {
                     }}
                   />
                 </td>
-                <td style={{ width: "260px" }}>{each?.name}</td>
+                <td>{each?.name}</td>
                 <td>{getFormattedDate(each?.last_updated.date)}</td>
                 <td>{each?.cogs}%</td>
                 <td>{each?.cost_price.toFixed(2)}</td>

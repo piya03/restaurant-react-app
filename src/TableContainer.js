@@ -6,6 +6,7 @@ import CommonTopCard from "./CommonComponent/Card/CommonTopCard";
 import axios from "axios";
 function TableContainer() {
   const [activeBtn, setActiveBtn] = useState("");
+
   const [tableDatainState, setTableDataInState] = useState({
     isFetching: false,
     isFetched: false,
@@ -91,7 +92,6 @@ function TableContainer() {
         `https://beta.eagleowl.in${finalUrlPrefix}${query ? `&${query}` : ""}`
       )
       .then((res) => {
-        console.log("ref.current, activeBtn", ref.current, activeBtn);
         if (ref.current === activeBtn) {
           setTableDataInState((stateNow) => {
             return {
@@ -131,7 +131,6 @@ function TableContainer() {
       } = document.documentElement;
 
       if (clientHeight + scrollTop >= scrollHeight - 20) {
-        console.log("to bottom");
         if (
           !isLoadingRef.current &&
           tableDataRef.current.next &&
@@ -153,15 +152,49 @@ function TableContainer() {
     callTableApi();
   }, [activeBtn]);
 
-  function sortByName(arr) {
-    return arr.sort((a, b) => {
-      if (a.name > b.name) {
-        return 1;
-      } else {
-        return -1;
-      }
-    });
+  const [sortInfo, setSortInfo] = useState({
+    key: "name",
+    order: "ASC",
+  });
+
+  function sortData(arr, key, order) {
+    if (order === "ASC") {
+      return arr.sort((a, b) => {
+        let comparisonA = a[key];
+        let comparisonB = b[key];
+
+        if (key === "last_updated") {
+          comparisonA = new Date(comparisonA.date);
+          comparisonB = new Date(comparisonB.date);
+        }
+        if (comparisonA > comparisonB) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+    } else {
+      return arr.sort((a, b) => {
+        let comparisonA = a[key];
+        let comparisonB = b[key];
+
+        if (key === "last_updated") {
+          comparisonA = new Date(comparisonA.date);
+          comparisonB = new Date(comparisonB.date);
+        }
+        if (comparisonA < comparisonB) {
+          return 1;
+        } else {
+          return -1;
+        }
+      });
+    }
   }
+
+  let sortedFinalData = React.useMemo(() => {
+    return sortData([...tableData], sortInfo.key, sortInfo.order);
+  }, [sortInfo, tableData]);
+
   return (
     <div className="container">
       <div style={{ width: "100%" }}>
@@ -189,12 +222,16 @@ function TableContainer() {
 
       <div className="btn_container">
         <CommonBtn
-          value="ALL RECIPIE(S)"
+          value="ALL RECIPE(S)"
           passStyle={{
             background: activeBtn === "" ? "#94b3f6" : "#f5f9fc",
             color: activeBtn === "" ? "white" : "black",
           }}
-          onClick={() => setActiveAndResetData("")}
+          onClick={() => {
+            if (activeBtn !== "") {
+              setActiveAndResetData("");
+            }
+          }}
         />
         <CommonBtn
           value="INCORRECT"
@@ -202,7 +239,11 @@ function TableContainer() {
             background: activeBtn === "is_incorrect" ? "#94b3f6" : "#f5f9fc",
             color: activeBtn === "is_incorrect" ? "white" : "black",
           }}
-          onClick={() => setActiveAndResetData("is_incorrect")}
+          onClick={() => {
+            if (activeBtn !== "is_incorrect") {
+              setActiveAndResetData("is_incorrect");
+            }
+          }}
         />
         <CommonBtn
           value="UNTAGGED"
@@ -210,7 +251,11 @@ function TableContainer() {
             background: activeBtn === "is_untagged" ? "#94b3f6" : "#f5f9fc",
             color: activeBtn === "is_untagged" ? "white" : "black",
           }}
-          onClick={() => setActiveAndResetData("is_untagged")}
+          onClick={() => {
+            if (activeBtn !== "is_untagged") {
+              setActiveAndResetData("is_untagged");
+            }
+          }}
         />
         <CommonBtn
           value="DISABLED"
@@ -218,16 +263,22 @@ function TableContainer() {
             background: activeBtn === "is_disabled" ? "#94b3f6" : "#f5f9fc",
             color: activeBtn === "is_disabled" ? "white" : "black",
           }}
-          onClick={() => setActiveAndResetData("is_disabled")}
+          onClick={() => {
+            if (activeBtn !== "is_disabled") {
+              setActiveAndResetData("is_disabled");
+            }
+          }}
         />
       </div>
       <div className="table_container" style={{ width: "100%" }}>
         <CommonTable
+          sortInfo={sortInfo}
+          setSortInfo={setSortInfo}
           changeTableData={changeTableData}
-          tableData={tableData}
+          tableData={sortedFinalData}
           setTableDataInState={setTableDataInState}
           tableDatainState={tableDatainState}
-          sortByName={sortByName}
+          // sortByName={sortByName}
           isFetching={isFetching}
         />
       </div>

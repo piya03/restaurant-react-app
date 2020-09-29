@@ -10,13 +10,15 @@
   .tableStyle tr {
     display: grid;
     width: fit-content;
-    grid-template-columns: 80px 260px minmax(200px, 1fr) minmax(200px, 1fr) minmax(200px, 1fr) minmax(200px, 1fr) minmax(200px, 1fr) minmax(250px, 1fr);
+    grid-template-columns: 80px 149px minmax(200px, 1fr) minmax(150px, 1fr) minmax(200px, 1fr) minmax(200px, 1fr) minmax(200px, 1fr) minmax(250px, 1fr);;
+    
 
   }
   .tableStyle tr th {
     background-color: #94b3f6;
     color: white;
     min-width: 155px;
+    cursor: pointer;
   }
   .tableStyle tr td {
       font-size: 14px;
@@ -43,7 +45,10 @@
    .angleup{
       font-size: 18px;
       font-weight: 700;
-      padding-left: 12px;
+      /* padding-left: 12px; */
+  }
+  span {
+    margin-right: 6px;
   }
   .tag_action{
       background-color: #f5f5d1;
