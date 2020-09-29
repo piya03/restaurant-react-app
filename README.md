@@ -1,4 +1,4 @@
-# Restaurant React App
+# Restaurant React App 🌶️ 🍅 🍲
 
 Steps to run:
 
