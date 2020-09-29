@@ -4,10 +4,9 @@ Steps to run:
 
 ```
 yarn && yarn start
-
 ```
 
-Features implemented:
+### Features implemented:
 
 1. All 3 APIs integrated.
 2. Tab switch and different API call with query params on change.
@@ -16,7 +15,7 @@ Features implemented:
 5. Site is completely responsive.
 
 
-Major pieces of implementation:
+### Major pieces of implementation:
 
 1. State management done using  React state hooks
 2. The graphical representation is done using react-circular-progressbar package.
