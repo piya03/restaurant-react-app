@@ -13,3 +13,14 @@
     overflow-x: auto;
     padding-bottom: 30px;
 }
+.header {
+    background: #94b3f6;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 26px;
+    color: #fff;
+    font-weight: bold;
+    font-family: monospace;
+}

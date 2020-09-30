@@ -4,8 +4,9 @@ import TableContainer from "./TableContainer";
 function App() {
   return (
     <div className="App">
+      <div className="header">Restaurant App</div>
       <div>
-        <TableContainer />{" "}
+        <TableContainer />
       </div>
     </div>
   );
