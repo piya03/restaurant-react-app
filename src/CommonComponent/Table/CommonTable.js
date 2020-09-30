@@ -13,7 +13,6 @@ const CommonTable = (props) => {
     isFetching,
 
     changeTableData,
-
     sortInfo,
     setSortInfo,
   } = props;
